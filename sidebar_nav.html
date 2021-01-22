@@ -1,0 +1,186 @@
+<ul class="vertical  menu  accordion-menu  sidebar-accordion" data-accordion-menu>
+    {% if menu.main_menu and menu.main_menu.items.size > 0 %}
+    <li class="sidebar-accordion__item">
+        <a href="{{ store.url }}" role=button
+            class="sidebar-accordion__anchor{% if template == 'home' %}  sidebar-accordion__anchor--current{% endif %}">Inicio</a>
+    </li>
+
+    {% for item in menu.main_menu.items %}
+    <li class="sidebar-accordion__item">
+        {% if item.dropdown %}
+        <a href="#" role=button
+            class="sidebar-accordion__anchor{% if item.active %}  sidebar-accordion__anchor--current{% endif %}">{{
+            item.name }}</a>
+        <ul class="menu vertical nested  sidebar-accordion__menu{% if item.active %}  is-active{% endif %}">
+            {% if item.name == 'Lentes Ópticos' or item.name == 'Gafas de Sol' or item.name == 'Lentes de Sol' or
+            item.name == 'ClipOn' or item.name == 'Clip-On' %}
+            {% for item in item.items %}
+            {% for item in item.items %}
+            <li class="sidebar-accordion__subitem">
+                {% if item.dropdown %}
+                <a href="#" role=button
+                    class="sidebar-accordion__subanchor{% if item.active %}  sidebar-accordion__subanchor--current{% endif %}">{{
+                    item.name }}</a>
+                <ul class="menu vertical nested  sidebar-accordion__submenu{% if item.active %}  is-active{% endif %}">
+                    {% for item in item.items %}
+                    <li class="sidebar-accordion__subsubitem">
+                        <a href="{{ item.url }}"
+                            class="sidebar-accordion__subsubanchor{% if item.active %}  sidebar-accordion__subsubanchor--current{% endif %}"
+                            title="Ir a {{ item.name }}">{{ item.name }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- end .sidebar-accordion__submenu -->
+                {% else %}
+                <a href="{{ item.url }}"
+                    class="sidebar-accordion__subanchor{% if item.active %}  sidebar-accordion__subanchor--current{% endif %}"
+                    title="Ir a {{ item.name }}">{{ item.name }}</a>
+                {% endif %}
+            </li>
+            {% endfor %}
+            {% endfor %}
+            {% else %}
+            {% for item in item.items %}
+            <li class="sidebar-accordion__subitem">
+                {% if item.dropdown %}
+                <a href="#" role=button
+                    class="sidebar-accordion__subanchor{% if item.active %}  sidebar-accordion__subanchor--current{% endif %}">{{
+                    item.name }}</a>
+
+                <ul class="menu vertical nested  sidebar-accordion__submenu{% if item.active %}  is-active{% endif %}">
+                    {% for item in item.items %}
+                    <li class="sidebar-accordion__subsubitem">
+                        {% if item.dropdown %}
+                        <a href="#" role=button
+                            class="sidebar-accordion__subsubanchor{% if item.active %}  sidebar-accordion__subsubanchor--current{% endif %}">{{
+                            item.name }}</a>
+
+                        <ul class="menu vertical nested  sidebar-accordion__submenu">
+                            {% for item in item.items %}
+                            {% if forloop.last %}
+                            <li class="sidebar-accordion__subsubitem  sidebar-accordion__subsubitem--all">
+                                <a href="{{ item.url }}"
+                                    class="sidebar-accordion__subsubanchor  sidebar-accordion__subsubanchor--all"
+                                    title="{{ item.name }}">{{ item.name }} <i class="fal fa-angle-right fa-fw"></i></a>
+                            </li>
+                            {% else %}
+                            <li class="sidebar-accordion__subsubitem">
+                                <a href="{{ item.url }}"
+                                    class="sidebar-accordion__subsubanchor{% if item.active %}  sidebar-accordion__subsubanchor--current{% endif %}"
+                                    title="Ir a {{ item.name }}">{{ item.name }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                        {% else %}
+                        <a href="{{ item.url }}"
+                            class="sidebar-accordion__subsubanchor{% if item.active %}  sidebar-accordion__subsubanchor--current{% endif %}"
+                            title="Ir a {{ item.name }}">{{ item.name }}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <!-- end .sidebar-accordion__submenu -->
+                {% else %}
+                <a href="{{ item.url }}"
+                    class="sidebar-accordion__subanchor{% if item.active %}  sidebar-accordion__subanchor--current{% endif %}"
+                    title="Ir a {{ item.name }}">{{ item.name }}</a>
+                {% endif %}
+            </li>
+            <!-- end .sidebar-accordion__subitem -->
+            {% endfor %}
+            {% endif %}
+            <li class="sidebar-accordion__subitem  sidebar-accordion__subitem--last">
+                <a href="{{ item.url }}" class="sidebar-accordion__subanchor  sidebar-accordion__subanchor--last"
+                    title="Ir a {{ item.name }}">Ir a {{ item.name }} <i class="far fa-angle-right fa-fw"></i></a>
+            </li>
+            <!-- end .sidebar-accordion__subitem--last -->
+        </ul>
+        <!-- end .sidebar-accordion__menu -->
+        {% else %}
+        <a href="{{ item.url }}"
+            class="sidebar-accordion__anchor{% if item.active %}  sidebar-accordion__anchor--current{% endif %}"
+            title="Ir a {{ item.name }}">{{ item.name }}</a>
+        {% endif %}
+    </li>
+    <!-- end .sidebar-accordion__item -->
+    {% endfor %}
+    {% endif %}
+</ul>
+<!-- end .sidebar-accordion -->
+
+{% if menu.footer_menu and menu.footer_menu.items.size > 0 %}
+{% for item in menu.footer_menu.items %}
+<ul class="no-bullet  sidebar-menu">
+    <li class="sidebar-menu__title">{{ item.name }}</li>
+    {% if item.dropdown %}
+    {% for item in item.items %}
+    <li class="sidebar-menu__item">
+        <a href="{{ item.url }}" class="sidebar-menu__link" title="Ir a {{ item.name }}">{{ item.name }}</a>
+    </li>
+    {% endfor %}
+    {% endif %}
+</ul>
+<!-- end .sidebar-menu -->
+{% endfor %}
+{% endif %}
+
+<!-- Sidebar Menu -->
+<ul class="no-bullet  sidebar-menu">
+    <li class="sidebar-menu__title">Síguenos</li>
+
+    {% if options.store_facebook != blank %}
+    <!-- Facebook -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_facebook }}" class="sidebar-menu__link" title="Síguenos en Facebook"><i
+                class="fab fa-facebook-f fa-fw"></i>{% if options.store_facebook_user != blank %}{{
+            options.store_facebook_user }}{% else %}Síguenos en Facebook{% endif %}</a>
+    </li>
+    {% endif %}
+
+    {% if options.store_twitter != blank %}
+    <!-- Twitter -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_twitter }}" class="sidebar-menu__link" title="Síguenos en Twitter"><i
+                class="fab fa-twitter fa-fw"></i>{% if options.store_twitter_user != blank %}{{
+            options.store_twitter_user }}{% else %}Síguenos en Twitter{% endif %}</a>
+    </li>
+    {% endif %}
+
+    {% if options.store_instagram != blank %}
+    <!-- Instagram -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_instagram }}" class="sidebar-menu__link" title="Síguenos en Instagram"><i
+                class="fab fa-instagram fa-fw"></i>{% if options.store_instagram_user != blank %}{{
+            options.store_instagram_user }}{% else %}Síguenos en Instagram{% endif %}</a>
+    </li>
+    {% endif %}
+
+    {% if options.store_youtube != blank %}
+    <!-- Youtube -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_youtube }}" class="sidebar-menu__link" title="Síguenos en Youtube"><i
+                class="fab fa-youtube fa-fw"></i>{% if options.store_youtube_user != blank %}{{
+            options.store_youtube_user }}{% else %}Síguenos en Youtube{% endif %}</a>
+    </li>
+    {% endif %}
+
+    {% if options.store_vimeo != blank %}
+    <!-- Vimeo -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_vimeo }}" class="sidebar-menu__link" title="Síguenos en Vimeo"><i
+                class="fab fa-vimeo fa-fw"></i>{% if options.store_vimeo_user != blank %}{{ options.store_vimeo_user
+            }}{% else %}Síguenos en Vimeo{% endif %}</a>
+    </li>
+    {% endif %}
+
+    {% if options.store_pinterest != blank %}
+    <!-- Pinterest -->
+    <li class="sidebar-menu__item">
+        <a href="{{ options.store_pinterest }}" class="sidebar-menu__link" title="Síguenos en Pinterest"><i
+                class="fab fa-pinterest fa-fw"></i>{% if options.store_pinterest_user != blank %}{{
+            options.store_pinterest_user }}{% else %}Síguenos en Pinterest{% endif %}</a>
+    </li>
+    {% endif %}
+</ul>
+<!-- end .sidebar-menu -->

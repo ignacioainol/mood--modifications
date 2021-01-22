@@ -1,0 +1,91 @@
+{% assign featured1 = store.category[options.home_featured1_permalink] %}
+{% capture featured1_permalink %}{{ options.home_featured1_permalink }}{% endcapture %}
+<div class="grid-x  featured-banner">
+    <div class="small-12  medium-6  large-6  cell  featured-banner__gallery">
+        <a href="{{ featured1.url }}" class="featured-banner__anchor" title="Ver products">
+            <picture class=featured-banner__picture>
+                <source media="screen and (max-width: 400px)"
+                    srcset="{{ options.home_featured1_image_mobile | resize:'400x254' }}">
+                <source media="screen and (max-width: 639px)"
+                    srcset="{{ options.home_featured1_image_mobile | resize:'609x387' }}">
+                <source media="screen and (max-width: 768px)"
+                    srcset="{{ options.home_featured1_image_desktop | thumb:'369x335' }}">
+                <source media="screen and (max-width: 1023px)"
+                    srcset="{{ options.home_featured1_image_desktop | resize:'497x315' }}">
+                <source media="screen and (min-width: 1024px)"
+                    srcset="{{ options.home_featured1_image_desktop | resize:'585x371' }}">
+                <img alt="{{ featured1.name }}" class="featured-banner__image"
+                    src="{{ options.home_featured1_image_desktop | resize:'585x371' }}"
+                    srcset="{{ options.home_featured1_image_desktop | resize:'585x371' }}">
+            </picture>
+        </a>
+    </div>
+    <!-- end .featured-banner__gallery -->
+
+    <div class="small-12  medium-6  large-6  cell  text-center  medium-text-left  featured-banner__content">
+        <div class="featured-banner__table">
+            <div class="featured-banner__cell">
+                <h3 class="featured-banner__title">{% if options.home_featured1_title != blank %}{{
+                    options.home_featured1_title }}{% else %}{{ featured1.name }}{% endif %}</h3>
+                {% if options.home_featured1_text != blank %}
+                <p class="featured-banner__text">{{ options.home_featured1_text | newline_to_br }}</p>
+                {% endif %}
+                <a href="{{ featured1.url }}"
+                    class="button  button--black  button--bordered  button--upp  featured-banner__button"
+                    title="Ver productos">Ver productos <i class="fal fa-arrow-right fa-fw"></i></a>
+                {% if options.home_featured1_page_link != blank %}
+                <a href="{{ options.home_featured1_page_link }}" class="featured-banner__link"
+                    title="{{ options.home_featured1_page_link_text }}">{{ options.home_featured1_page_link_text }}</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- end .featured-banner__content -->
+</div>
+<!-- end .featured-banner -->
+
+<!-- Featured Gallery -->
+<div class="grid-x  grid-padding-x  store-slider  featured-gallery  featured-gallery--1">
+    {% for product in products.featured %}
+    {% if product.categories.first.permalink == featured1_permalink %}
+    {% include 'product_block' %}
+    {% endif %}
+    {% endfor %}
+</div>
+<!-- end .featured-gallery -->
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".featured-gallery--1").slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: true,
+            prevArrow: '<button type="button" class="slick-arrow slick-prev trsn"><i class="fal fa-arrow-left"></i></button>',
+            nextArrow: '<button type="button" class="slick-arrow slick-next trsn"><i class="fal fa-arrow-right"></i></button>',
+            dots: false,
+            infinite: false,
+            speed: 350,
+            fade: false,
+            cssEase: "linear",
+            autoplay: false,
+            autoplaySpeed: 4000,
+            destroy: true,
+            responsive: [
+                {
+                    breakpoint: 99999,
+                    settings: "unslick"
+                },
+                {
+                    breakpoint: 640,
+                    settings: {
+                        slidesToShow: 1,
+                        arrows: false,
+                        dots: true,
+                        infinite: true,
+                        destroy: false
+                    }
+                }
+            ]
+        });
+    });
+</script>

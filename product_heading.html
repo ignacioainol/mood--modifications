@@ -1,0 +1,24 @@
+{% if product.brand != blank %}
+<span class="product-heading__brand">{{ product.brand }}</span>
+{% endif %}
+<h1 class="product-heading__title">{% if product.field["Nombre Preview"] and product.field["Nombre Preview"].value !=
+    blank %}{{ product.field["Nombre Preview"].value }}{% else %}{{ product.name }}{% endif %}</h1>
+<h2 class="product-heading__pricing">
+    {% if product.discount > 0 %}
+    <div class="product-heading__price  product-heading__price--new">{{ product.price | minus:product.discount | price
+        }}</div>
+    <div class="product-heading__price  product-heading__price--old">{{ product.price | price }}</div>
+    {% else %}
+    {{ product.price | price }}
+    {% endif %}
+</h2>
+{% if product.sku != blank %}
+<span class="product-heading__sku">SKU: {{ product.sku }}</span>
+{% endif %}
+
+{% if product.field["Prueba Virtual"] and product.field["Prueba Virtual"].value != blank %}
+<a href="{{ product.field['Prueba Virtual'].value }}"
+    class="button  button--green  button--radius  product-heading__virtual" title="Ver Prueba Virtual"
+    target="_blank"><img src="{{ 'mood-icon_glass.svg' | asset }}" alt="Icono Prueba Virtual {{ store.name }}">Prueba
+    Virtual</a>
+{% endif %}

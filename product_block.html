@@ -1,0 +1,160 @@
+{% unless product.template == 'Demo Test' %}
+{% if template == 'product' %}
+<div class="product-block  product-block--slider">
+    {% capture product_name %}{% if prod.field["Nombre Preview"] and prod.field["Nombre Preview"].value != blank %}{{
+    prod.field["Nombre Preview"].value }}{% else %}{{ prod.name }}{% endif %}{% endcapture %}
+
+    <a href="{{ prod.url }}" class="product-block__anchor" title="Ver {{ product_name }}">
+        {% if prod.discount > 0 %}
+        <span class="product-block__discount">-{{ prod.discount | divided_by:prod.price | times:100 | round:0
+            }}&percnt;</span>
+        {% endif %}
+        {% if prod.images.size == 0 %}
+        <img src="{{ 'product-no-image.jpg' | asset }}" alt="{{ prod.name }}" class="product-block__image">
+        {% else %}
+        <picture class=product-block__picture>
+            <source media="screen and (max-width: 400px)" srcset="{{ prod.images.first | resize:'370x185' }}">
+            <source media="screen and (max-width: 639px)" srcset="{{ prod.images.first | resize:'290x145' }}">
+            <source media="screen and (max-width: 768px)" srcset="{{ prod.images.first | thumb:'354x177' }}">
+            <source media="screen and (max-width: 1023px)" srcset="{{ prod.images.first | resize:'311x155' }}">
+            <source media="screen and (min-width: 1024px)" srcset="{{ prod.images.first | resize:'370x185' }}">
+            <img alt="{{ prod.name }}" class="product-block__image" src="{{ prod.images.first | resize:'370x185' }}"
+                srcset="{{ prod.images.first | resize:'370x185' }}">
+        </picture>
+        {% if prod.images.size >= 2 %}
+        <picture class="product-block__picture  product-block__picture--hover  trsn">
+            <source media="screen and (max-width: 400px)" srcset="{{ prod.images[1] | resize:'370x185' }}">
+            <source media="screen and (max-width: 639px)" srcset="{{ prod.images[1] | resize:'290x145' }}">
+            <source media="screen and (max-width: 768px)" srcset="{{ prod.images[1] | thumb:'354x177' }}">
+            <source media="screen and (max-width: 1023px)" srcset="{{ prod.images[1] | resize:'311x155' }}">
+            <source media="screen and (min-width: 1024px)" srcset="{{ prod.images[1] | resize:'370x185' }}">
+            <img alt="{{ prod.name }}" class="product-block__image" src="{{ prod.images[1] | resize:'370x185' }}"
+                srcset="{{ prod.images[1] | resize:'370x185' }}">
+        </picture>
+        {% endif %}
+        {% endif %}
+    </a>
+
+    <div class="product-block__info">
+        {% if prod.brand != blank %}
+        <span class="product-block__brand">{{ prod.brand }}</span>
+        {% endif %}
+        <a href="{{ prod.url }}" class="product-block__name" title="Ver {{ product_name }}">{{ product_name }}</a>
+        {% if prod.discount > 0 %}
+        <span class="product-block__price  product-block__price--discount">{{ prod.price | minus:prod.discount | price
+            }} <small>{{ prod.price | price }} aaaa</small></span>
+        {% else %}
+        <span class="product-block__price">{{ prod.price | price }}</span>
+        {% endif %}
+
+        {% if prod.options.size > 0 %}
+        {% for option in prod.options %}
+        {% if option.name == 'Color' %}
+        {% if prod.field["Código Colores"] and prod.field["Código Colores"].value != blank %}
+        {% assign colors = prod.field["Código Colores"].value | split:'*' %}
+        <span class="product-block__colors">
+            {% for color in colors %}
+            <div class="product-block__color-circle" style="background:{{ color }};"></div>
+            {% endfor %}
+        </span>
+        {% else %}
+        <span class="product-block__colors">{{ option.values.size }} {% if option.values.size == 1 %}color disponible{%
+            else %}colores disponibles{% endif %}</span>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <a href="{{ prod.url }}"
+            class="button  button--black  button--bordered  button--upp  button--trsn  product-block__button"
+            title="Ver detalles"><span>Ver detalles</span></a>
+    </div>
+</div>
+{% else %}
+<div
+    class="small-6  medium-4  large-4  cell  product-block{% if template == 'home' %}  product-block--slider{% endif %}">
+    {% capture product_name %}{% if product.field["Nombre Preview"] and product.field["Nombre Preview"].value != blank
+    %}{{ product.field["Nombre Preview"].value }}{% else %}{{ product.name }}{% endif %}{% endcapture %}
+
+    <a href="{{ product.url }}" class="product-block__anchor" title="Ver {{ product_name }}">
+        {% if product.field["Estado"] and product.field["Estado"].value != blank %}
+        {% assign product_status = product.field["Estado"].value %}
+        {% capture product_status_image %}{% if product_status == options.product_status1_name %}{{
+        options.product_status1_image }}{% elsif product_status == options.product_status2_name %}{{
+        options.product_status2_image }}{% elsif product_status == options.product_status3_name %}{{
+        options.product_status3_image }}{% elsif product_status == options.product_status4_name %}{{
+        options.product_status4_image }}{% endif %}{% endcapture %}
+        <img src="{{ product_status_image }}" alt="{{ product_status }}" class="product-block__status">
+        {% endif %}
+
+        {% if product.discount > 0 %}
+        <span class="product-block__discount">-{{ product.discount | divided_by:product.price | times:100 | round:0
+            }}&percnt;</span>
+        {% endif %}
+        {% if product.images.size == 0 %}
+        <img src="{{ 'product-no-image.jpg' | asset }}" alt="{{ product.name }}" class="product-block__image">
+        {% else %}
+        <picture class=product-block__picture>
+            <source media="screen and (max-width: 400px)" srcset="{{ product.images.first | resize:'370x185' }}">
+            <source media="screen and (max-width: 639px)" srcset="{{ product.images.first | resize:'290x145' }}">
+            <source media="screen and (max-width: 768px)" srcset="{{ product.images.first | thumb:'354x177' }}">
+            <source media="screen and (max-width: 1023px)" srcset="{{ product.images.first | resize:'311x155' }}">
+            <source media="screen and (min-width: 1024px)" srcset="{{ product.images.first | resize:'370x185' }}">
+            <img alt="{{ product.name }}" class="product-block__image"
+                src="{{ product.images.first | resize:'370x185' }}"
+                srcset="{{ product.images.first | resize:'370x185' }}">
+        </picture>
+        {% if product.images.size >= 2 %}
+        <picture class="product-block__picture  product-block__picture--hover  trsn">
+            <source media="screen and (max-width: 400px)" srcset="{{ product.images[1] | resize:'370x185' }}">
+            <source media="screen and (max-width: 639px)" srcset="{{ product.images[1] | resize:'290x145' }}">
+            <source media="screen and (max-width: 768px)" srcset="{{ product.images[1] | thumb:'354x177' }}">
+            <source media="screen and (max-width: 1023px)" srcset="{{ product.images[1] | resize:'311x155' }}">
+            <source media="screen and (min-width: 1024px)" srcset="{{ product.images[1] | resize:'370x185' }}">
+            <img alt="{{ product.name }}" class="product-block__image" src="{{ product.images[1] | resize:'370x185' }}"
+                srcset="{{ product.images[1] | resize:'370x185' }}">
+        </picture>
+        {% endif %}
+        {% endif %}
+    </a>
+
+    <div class="product-block__info">
+        {% if product.brand != blank %}
+        <span class="product-block__brand">{{ product.brand }}</span>
+        {% endif %}
+        <a href="{{ product.url }}" class="product-block__name" title="Ver {{ product_name }}">{{ product_name }}</a>
+        <!-- Precio del Producto -->
+        {% if product.discount > 0 %}
+        <span class="product-block__price  product-block__price--discount">{{ product.price | minus:product.discount |
+            price }}<small>{{ product.price | price }}</small></span>
+        {% else %}
+        <span class="product-block__price">{{ product.price | price }}</span>
+        {% endif %}
+
+        {% if product.options.size > 0 %}
+        {% for option in product.options %}
+        {% if option.name == 'Color' %}
+        {% if product.field["Código Colores"] and product.field["Código Colores"].value != blank %}
+        {% assign colors = product.field["Código Colores"].value | split:'*' %}
+        <span class="product-block__colors">
+            {% for color in colors %}
+            <div class="product-block__color-circle" style="background:{{ color }};"></div>
+            {% endfor %}
+        </span>
+        {% else %}
+        <span class="product-block__colors">{{ option.values.size }} {% if option.values.size == 1 %}color disponible{%
+            else %}colores disponibles{% endif %}</span>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+        <a href="{{ product.url }}"
+            class="button  button--black  button--bordered  button--upp  button--trsn  product-block__button"
+            title="Ver detalles"><span>Ver detalles</span></a>
+
+
+    </div>
+</div>
+{% endif %}
+{% endunless %}

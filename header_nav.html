@@ -1,0 +1,76 @@
+{% if menu.main_menu and menu.main_menu.items.size > 0 %}
+<ul class="header-nav__menu{% if options.enable_sidebar_guide == true %}  header-nav__menu--push{% endif %}  dropdown  menu  show-for-large"
+    data-dropdown-menu data-closing-time=200>
+    {% for item in menu.main_menu.items %}
+    <li
+        class="header-nav__item{% if item.name == 'Lentes Ópticos' or item.name == 'Ópticos' or item.name == 'Gafas de Sol' or item.name == 'Lentes de Sol' or item.name == 'ClipOn' or item.name == 'Clip-On' or item.name == 'Cristales' %}  header-nav__item--has-megamenu{% endif %}{% if item.dropdown %}  header-nav__item--has-dropdown{% endif %}">
+        <a href="{{ item.url }}"
+            class="header-nav__link{% if item.dropdown %}  header-nav__link--has-dropdown{% endif %}{% if item.active %}  header-nav__link--current{% endif %}"
+            title="Ir a {{ item.name }}">{{ item.name }}{% if item.dropdown %} <i class="fal fa-angle-down fa-fw"></i>{%
+            endif %}</a>
+        {% if item.dropdown %}
+        {% if item.name == 'Lentes Ópticos' or item.name == 'Ópticos' or item.name == 'Gafas de Sol' or item.name ==
+        'Lentes de Sol' or item.name == 'ClipOn' or item.name == 'Clip-On' %}
+        <ul class="menu  header-megamenu">
+            {% for item in item.items %}
+            <li class="header-megamenu__column">
+                {% if item.dropdown %}
+                <div class="grid-x  grid-padding-x  header-megamenu__wrapper">
+                    {% if forloop.first %}
+                    {% for item in item.items %}
+                    <div class="small-4  cell  text-center  header-megamenu__block">
+                        <a href="{{ item.url }}" class="header-megamenu__anchor" title="Ir a {{ item.name }}">
+                            <img src="{{ item.images.first | thumb:'320x320' }}" alt="{{ item.name }}"
+                                class="header-megamenu__image">
+                            <span>{{ item.name }}</span>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    {% elsif forloop.last %}
+                    {% for item in item.items %}
+                    <div class="small-4  cell  header-megamenu__block">
+                        <h6 class="header-megamenu__title">{{ item.name }}</h6>
+                        {% if item.dropdown %}
+                        <ul class="no-bullet  header-megamenu__list">
+                            {% for item in item.items %}
+                            <li class="header-megamenu__item">
+                                <a href="{{ item.url }}" class="header-megamenu__link" title="{{ item.name }}">{{
+                                    item.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {% endif %}
+            </li>
+            <!--end .header-megamenu__column -->
+            {% endfor %}
+        </ul>
+        {% elsif item.name == 'Cristales' or item.name == 'Nuestros Cristales' %}
+        <ul class="menu  header-megamenu">
+            <li class="header-megamenu__column  header-megamenu__column--full">
+                <div class="grid-x  grid-padding-x  header-megamenu__wrapper">
+                    {% for item in item.items %}
+                    <div class="small-2  cell  text-center  header-megamenu__block">
+                        <a href="{{ item.url }}" class="header-megamenu__anchor" title="Ir a {{ item.name }}">
+                            <img src="{{ item.images.first | thumb:'320x320' }}" alt="{{ item.name }}"
+                                class="header-megamenu__image">
+                            <span>{{ item.name }}</span>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </li>
+            <!--end .header-megamenu__column -->
+        </ul>
+        {% else %}
+        {% include 'header_dropdown' %}
+        {% endif %}
+        {% endif %}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}

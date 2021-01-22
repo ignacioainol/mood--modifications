@@ -1,0 +1,27 @@
+<!-- Category Heading -->
+{% if category.images.size > 0 %}
+<section class="grid-container  grid-container--full  text-center  category-heading  category-heading--bg"
+    style="background-image: url('{{ category.images.first }}');">
+    {% include 'category_heading' %}
+</section>
+<!-- end .category-heading -->
+{% else %}
+{% include 'store_breadcrumbs' %}
+<section class="grid-container  text-center  category-heading">
+    {% include 'category_heading' %}
+</section>
+{% endif %}
+
+{% if filters != empty %}
+<!-- Category Filters -->
+{% include 'category_filters' %}
+<!-- end .category-filters -->
+{% endif %}
+
+<!-- Category Gallery -->
+<section class="grid-container  category-gallery">
+    <div class="grid-x  grid-padding-x">
+        {% include 'category_gallery' %}
+    </div>
+</section>
+<!-- end .category-gallery -->

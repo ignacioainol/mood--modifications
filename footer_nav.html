@@ -1,0 +1,25 @@
+{% capture block_columns %}{% if options.enable_footer_newsletter == true %}medium-3 large-3{% else %}medium-4 large-4{%
+endif %}{% endcapture %}
+
+{% for item in menu.footer_menu.items %}
+<div class="small-6  {{ block_columns }}  cell  show-for-medium  footer-nav__block">
+    <span class="footer-nav__title">{{ item.name }}</span>
+    {% if item.dropdown %}
+    <ul class="no-bullet  footer-nav__menu">
+        {% for item in item.items %}
+        <li class="footer-nav__item">
+            <a href="{{ item.url }}" class="footer-nav__link" title="{{ item.name }}">{{ item.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+<!-- end .footer-nav__block -->
+{% endfor %}
+
+{% if options.enable_footer_newsletter == true %}
+<div class="small-12  medium-3  large-3  cell  text-center  medium-text-left  footer-nav__block">
+    {% include 'footer_newsletter' %}
+</div>
+<!-- end .footer-nav__block -->
+{% endif %}

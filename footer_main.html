@@ -1,0 +1,79 @@
+<div class="small-12  medium-6  large-6  cell  text-center  footer-main__block  footer-main__block--brand">
+    <img src="{{ options.footer_logo }}"
+        alt="{% if options.footer_logo_alt != blank %}{{ options.footer_logo_alt }}{% else %}Logo Footer {{ store.name }}{% endif %}"
+        class="footer-main__logo">
+</div>
+<!-- end .footer-main__block--brand -->
+
+<div
+    class="small-12  medium-3  large-3  cell  text-center  medium-text-left  footer-main__block  footer-main__block--contact">
+    <ul class="no-bullet  footer-main__list  footer-main__list--contact">
+        {% if options.store_contact_email != blank %}
+        <li class="footer-main__item  footer-main__item--left">
+            <a href="mailto:{{ options.store_contact_email }}" class="footer-main__link" title="Envíanos un correo"><i
+                    class="far fa-envelope fa-fw"></i> {{ options.store_contact_email }}</a>
+        </li>
+        {% endif %}
+        {% if options.store_contact_phone != blank %}
+        <li class="footer-main__item  footer-main__item--left">
+            <a href="https://wa.me/{{ options.store_contact_phone | remove:' ' | remove:'+' }}"
+                class="footer-main__link" title="Envíanos un mensaje" target="_blank"><i
+                    class="fab fa-whatsapp fa-fw"></i> {{ options.store_contact_phone }}</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<!-- end .footer-main__block--brand -->
+
+<div
+    class="small-12  medium-3  large-3  cell  text-center  medium-text-right  footer-main__block  footer-main__block--social">
+    <ul class="no-bullet  footer-main__list  footer-main__list--social">
+        {% if options.store_facebook != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_facebook }}" class="footer-main__link" title="Síguenos en Facebook"
+                target="_blank"><i class="fab fa-facebook-square fa-fw"></i>{% if options.store_facebook_user != blank
+                %}{{ options.store_facebook_user }}{% endif %}</a>
+        </li>
+        {% endif %}
+        {% if options.store_instagram != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_instagram }}" class="footer-main__link" title="Síguenos en Instagram"
+                target="_blank"><i class="fab fa-instagram fa-fw"></i>{% if options.store_instagram_user != blank %}{{
+                options.store_instagram_user }}{% endif %}</a>
+        </li>
+        {% endif %}
+        {% if options.store_twitter != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_twitter }}" class="footer-main__link" title="Síguenos en Twitter"
+                target="_blank"><i class="fab fa-twitter fa-fw"></i>{% if options.store_twitter_user != blank %}{{
+                options.store_twitter_user }}{% endif %}</a>
+        </li>
+        {% endif %}
+        {% if options.store_youtube != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_youtube }}" class="footer-main__link" title="Síguenos en Youtube"
+                target="_blank"><i class="fab fa-youtube fa-fw"></i>{% if options.store_youtube_user != blank %}{{
+                options.store_youtube_user }}{% endif %}</a>
+        </li>
+        {% endif %}
+        {% if options.store_vimeo != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_vimeo }}" class="footer-main__link" title="Síguenos en Vimeo" target="_blank"><i
+                    class="fab fa-vimeo fa-fw"></i>{% if options.store_vimeo_user != blank %}{{ options.store_vimeo_user
+                }}{% endif %}</a>
+        </li>
+        {% endif %}
+        {% if options.store_pinterest != blank %}
+        <li class="footer-main__item  footer-main__item--right">
+            <a href="{{ options.store_pinterest }}" class="footer-main__link" title="Síguenos en Pinterest"
+                target="_blank"><i class="fab fa-pinterest fa-fw"></i>{% if options.store_pinterest_user != blank %}{{
+                options.store_pinterest_user }}{% endif %}</a>
+        </li>
+        {% endif %}
+    </ul>
+</div>
+<!-- end .footer-main__block--brand -->
+
+<div class="small-12  cell  footer-main__block">
+    <hr class="footer-main__divider">
+</div>
