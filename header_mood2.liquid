@@ -1,0 +1,93 @@
+{% unless template == 'cart' or template == 'checkout' or template == 'revieworder' %}
+<!-- Header Topbar  -->
+<section class="grid-container  grid-container--full  show-for-medium  header-topbar  trsn">
+	<div class="grid-x  grid-padding-x">
+		{% include 'header_topbar' %}
+	</div>
+</section>
+<!-- end .header-topbar -->
+{% endunless %}
+
+<!-- Header Content -->
+<section class="grid-container{% if template == 'cart' or template == 'checkout' or template == 'revieworder' %}  grid-container--full{% endif %}  header-content">
+	<div class="grid-x  grid-padding-x{% if template == 'cart' or template == 'checkout' or template == 'revieworder' %}  grid-x--full{% endif %}  header-content__wrapper">
+		<div class="small-3  medium-3  cell  hide-for-large  header-content__block  header-content__block--toolbar">
+			<ul class="no-bullet  header-toolbar">
+				<!-- Nav -->
+				<li class="header-toolbar__item  header-toolbar__item--left">
+					<a role=button class="header-toolbar__link" data-open=sidebar-nav><i class="far fa-bars fa-fw"></i></a>
+				</li>
+				{% if options.enable_search == true %}
+				<!-- Search -->
+				<li class="header-toolbar__item  header-toolbar__item--left  header-toolbar__item--last">
+					<a role=button class="header-toolbar__link" data-open=sidebar-search><i class="far fa-search fa-fw"></i></a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+		
+    <div class="small-4 large-text-left">
+    	{% include 'header_search' %}
+    </div>
+    <div class="small-4 text-center">
+    	<a href="{{ store.url }}" class="header-content__brand" title="Ir al Inicio">
+      	{% if template == 'cart' or template == 'checkout' or template == 'revieworder' %}
+				{% if options.header_logo_cart != blank %}
+				<img src="{{ options.header_logo_cart }}" alt="Logo {{ store.name }}" class=header-content__logo>
+				{% else %}
+				<img src="{{ options.header_logo }}" alt="Logo {{ store.name }}" class=header-content__logo>
+				{% endif %}
+				{% else %}
+				<img src="{{ options.header_logo }}" alt="Logo {{ store.name }}" class=header-content__logo>
+				{% endif %}
+      </a>
+    </div>
+    <div class="small-4 text-right  header-content__block  header-content__block--toolbar">
+    		<ul class="no-bullet  header-toolbar">
+				<!-- Login -->
+				<li class="header-toolbar__item  header-toolbar__item--right  header-toolbar__item--last">
+					<a role=button class="header-toolbar__link" data-open=sidebar-login><i class="far fa-user-circle fa-fw"></i></a>
+				</li>
+				<!-- Nav -->
+				<li class="header-toolbar__item  header-toolbar__item--right">
+					<a role=button class="header-toolbar__link" data-open=sidebar-cart>
+						<i class="far fa-shopping-bag fa-fw"></i>
+						<span class="header-toolbar__counter">{{ order.products_count }}</span>
+					</a>
+				</li>
+			</ul>
+    </div>
+
+	</div>
+</section>
+<!-- end .header-content -->
+
+{% unless template == 'cart' or template == 'checkout' or template == 'revieworder' %}
+<!-- Header Nav -->
+<section class="grid-container  grid-container--full  show-for-medium  header-nav">
+	<div class="grid-x  grid-padding-x  header-nav__container">
+		<div class="small-12  cell  header-nav__content">
+			{% include 'header_nav' %}
+			
+			{% if options.enable_sidebar_guide == true %}
+			<button type="button" class="button  button--yellow  button--upp  header-nav__button" data-open=sidebar-guide>{{ options.sidebar_guide_button }} <i class="far fa-angle-right fa-fw"></i></button>
+			{% endif %}
+		</div>
+	</div>
+</section>
+<!-- end .header-nav -->
+
+<script type="text/javascript">
+	$(window).scroll(function(){
+		var scroll = $(window).scrollTop();
+		if(scroll >= 35){
+			$(".header-topbar").addClass("header-topbar--hidden");
+			// $(".main-container").addClass('main-container--scroll');
+		}
+		else{
+			$(".header-topbar").removeClass("header-topbar--hidden");
+			// $(".main-container").removeClass('main-container--scroll');
+		}
+	});
+</script>
+{% endunless %}

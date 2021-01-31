@@ -1,0 +1,188 @@
+{% if product.field["Galería Mood"] and product.field["Galería Mood"].value == 'Sí' %}
+-<div class="small-12  medium-6  large-6  cell  product-details__block  product-details__block--left show-for-medium show-for-large">
+<!--<div class="small-12  medium-6  large-6  cell  product-details__block  product-details__block--left">-->
+  	<div class="details-gallery">
+        {% for image in product.images %}
+        {% if image contains 'Detalles' or image contains 'detalles' %}
+        <div class="details-gallery__slide">
+            <picture class="details-gallery__picture">
+                <source media="screen and (max-width: 400px)" srcset="{{ image }}">
+                <source media="screen and (max-width: 639px)" srcset="{{ image }}">
+                <source media="screen and (max-width: 768px)" srcset="{{ image }}">
+                <source media="screen and (max-width: 1023px)" srcset="{{ image }}">
+                <source media="screen and (min-width: 1024px)" srcset="{{ image }}">
+                <img alt="{{ options.home_banner_title }}" class=details-gallery__image src="{{ image }}"
+                    srcset="{{ image }}">
+            </picture>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <!-- end .details-gallery -->
+</div>
+<!-- end .product-details__block -->
+{% endif %}
+
+<div class="small-12  medium-6  large-6  cell  product-details__block  product-details__block--right">
+    <div class="product-details__table">
+        <div class="product-details__cell">
+            <div class="grid-x  grid-padding-x">
+                <div class="small-12  cell">
+                    <h4 class="product-details__title">Sobre los Marcos</h4>
+                    {% if product.description != blank %}
+                    <div class="product-details__description">{{ product.description }}</div>
+                    {% endif %}
+                </div>
+
+                {% for field in product.fields %}
+                {% if field.label == 'Talla' or field.label == 'Medidas' or field.label == 'Material' or field.label ==
+                'Forma' %}
+                <div class="small-6  cell  product-details__item">
+                    <h6 class="product-details__subtitle">{{ field.label }}</h6>
+                    <p class="product-details__text">{{ field.value }}</p>
+                </div>
+                <!-- end .product-details__item -->
+                {% endif %}
+                {% endfor %}
+              	
+              	<!--[SLIDER MOBILE ACA]-->
+              	{% if product.field["Galería Mood"] and product.field["Galería Mood"].value == 'Sí' %}
+	              	<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+                    <div class="orbit-wrapper show-for-small-only">
+
+                      <div class="orbit-controls" style="display:none;">
+                        <button class="orbit-previous"><span class="show-for-sr">Previous Slide</span>&#9664;&#xFE0E;</button>
+                        <button class="orbit-next"><span class="show-for-sr">Next Slide</span>&#9654;&#xFE0E;</button>
+                      </div>
+
+                      <ul class="orbit-container">
+                        {% for image in product.images %}
+									        {% if image contains 'Detalles' or image contains 'detalles' %}
+                            <li class="is-active orbit-slide">
+                              <figure class="orbit-figure">
+                                <img class="orbit-image" src="{{ image }}" alt="Space">
+                              </figure>
+                            </li>
+	                        {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+              	{% endif %}
+	              <!--[/SLIDER MOBILE ACA]-->
+
+                {% if product.field["Medidas"] and product.field["Medidas"].value != blank %}
+                <div class="small-12  cell  product-details__actions" style="margin-top: 1em;">
+                        <div class="grid-x grid-padding-x">
+                            <div class="small-12  cell">
+                                <h5 class="product-sizes__title">{{ options.product_sizes_title }}</h5>
+                                <p class="product-sizes__text">{{ options.product_sizes_text | newline_to_br }}</p>
+                            </div>
+
+                            <div class="small-12  medium-6  large-5  cell  product-sizes__block">
+                                {% capture product_category %}{% for category in product.categories %}{{ category.name
+                                }}{% endfor %}{% endcapture %}
+                                {% assign table_adults = options.product_sizes_table_adults | split:',' %}
+                                {% assign table_kids = options.product_sizes_table_kids | split:',' %}
+
+                                {% if product_category contains 'Hombre' or product_category contains 'Mujer' %}
+                                <h6 class="product-sizes__subtitle  product-sizes__subtitle--large">Tabla de Medidas
+                                    (Adulto)</h6>
+                                <ul class="no-bullet  product-sizes__table">
+                                    {% for object in table_adults %}
+                                    {% assign item = object | split:':' %}
+                                    <li class="product-sizes__item">
+                                        {% for value in item %}
+                                        {% if forloop.first %}
+                                        <strong>{{ value }}:</strong>
+                                        {% elsif forloop.last %}
+                                        {{ value }}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    {% endfor %}
+                                    {% if options.product_sizes_table_adults_note != blank %}
+                                    <li class="product-sizes__item--last">{{ options.product_sizes_table_adults_note }}
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% elsif product_category contains 'Kids' %}
+                                <h6 class="product-sizes__subtitle  product-sizes__subtitle--large">Tabla de Medidas
+                                    (Kids)</h6>
+                                <ul class="no-bullet  product-sizes__table">
+                                    {% for object in table_kids %}
+                                    {% assign item = object | split:':' %}
+                                    <li class="product-sizes__item">
+                                        {% for value in item %}
+                                        {% if forloop.first %}
+                                        <strong>{{ value }}:</strong>
+                                        {% elsif forloop.last %}
+                                        {{ value }}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </li>
+                                    {% endfor %}
+                                    {% if options.product_sizes_table_kids_note != blank %}
+                                    <li class="product-sizes__item--last">{{ options.product_sizes_table_kids_note }}
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                                {% endif %}
+                            </div>
+
+                            {% capture sizes_format %}{{ product.field["Medidas"].value | replace:' - ','-' | replace:'
+                            / ', '-' }}{% endcapture %}
+                            {% assign sizes = sizes_format | split:'-' %}
+                            <div class="small-12  medium-6  large-7  cell  text-center  product-sizes__container">
+                                <div class="grid-x  grid-padding-x  product-sizes__box">
+                                    {% for size in sizes %}
+                                    <div class="small-6  medium-4  large-4  cell  product-sizes__block">
+                                        {% capture size_image %}{% if forloop.index == 1 %}{{
+                                        options.product_size1_image }}{% elsif forloop.index == 2 %}{{
+                                        options.product_size2_image }}{% elsif forloop.index == 3 %}{{
+                                        options.product_size3_image }}{% elsif forloop.index == 4 %}{{
+                                        options.product_size4_image }}{% elsif forloop.index == 5 %}{{
+                                        options.product_size5_image }}{% endif %}{% endcapture %}
+
+                                        {% capture size_title %}{% if forloop.index == 1 %}{{
+                                        options.product_size1_title }}{% elsif forloop.index == 2 %}{{
+                                        options.product_size2_title }}{% elsif forloop.index == 3 %}{{
+                                        options.product_size3_title }}{% elsif forloop.index == 4 %}{{
+                                        options.product_size4_title }}{% elsif forloop.index == 5 %}{{
+                                        options.product_size5_title }}{% endif %}{% endcapture %}
+
+                                        <img src="{{ size_image }}" alt="{{ size }}" class="product-sizes__image">
+                                        <span class="product-sizes__subtitle">{{ size_title }}</span>
+                                        <p class="product-sizes__value">{{ size }}</p>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <!-- end .product-details__actions -->
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end .product-details__block -->
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $(".details-gallery").slick({
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                arrows: true,
+                prevArrow: '<button type="button" class="slick-arrow slick-prev trsn"><i class="fal fa-angle-left"></i></button>',
+                nextArrow: '<button type="button" class="slick-arrow slick-next trsn"><i class="fal fa-angle-right"></i></button>',
+                dots: false,
+                infinite: true,
+                speed: 350,
+                fade: false,
+                cssEase: "linear",
+                autoplay: true,
+                autoplaySpeed: 4000
+            });
+        });
+</script>
