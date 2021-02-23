@@ -1,0 +1,89 @@
+{% assign crystals = store.category["cristales"] %}
+{% capture modal_content_id %}{% for subcategory in crystals.subcategories %}{% if forloop.first %}{{ subcategory.id
+}}{% endif %}{% endfor %}{% endcapture %}
+
+<style>
+	@media only screen and (max-width: 600px) {
+		#btnPruebaVirtual {
+			top: 0 !important;
+		}
+	}
+</style>
+
+<!-- Options Timeline -->
+<div class="small-12  cell  options-timeline">
+	<div class="trsn  options-timeline__item  options-timeline__item--step1  options-timeline__item--active">
+		<span>1</span>
+	</div>
+	<div class="trsn  options-timeline__item  options-timeline__item--step2"><span>2</span></div>
+	<div class="trsn  options-timeline__item  options-timeline__item--step3"><span>3</span></div>
+	<div class="trsn  options-timeline__item  options-timeline__item--step4"><span>4</span></div>
+	<div class="trsn  options-timeline__item  options-timeline__item--step5"><span>5</span></div>
+	<div class="options-timeline__bar  options-timeline__bar--step1">0%</div>
+</div>
+<!-- end .options-timeline -->
+
+{% for option in product.options %}
+{% capture the_option %}{{ option.name | downcase | replace:' / ','-' | replace:' ','-' | replace:'á','a' |
+replace:'é','e' | replace:'í','i' | replace:'ó','o' | replace:'ú','u' | replace:'ñ','n' | replace:'-&-','-' }}{%
+endcapture %}
+{% if option.name == 'Receta' %}
+<div class="small-12  cell  product-option  product-option--hidden">
+	{% else %}
+	<div
+		class="trsn  small-12  cell  product-option  product-option--step{% if option.name == 'Color' %}1{% elsif option.name == 'Cristal' %}4{% elsif option.name == 'Prescripción' %}3{% endif %}  product-option--{{ the_option }}{% if forloop.first %}  product-option--current{% endif %}">
+		{% endif %}
+		<div class="grid-x  grid-padding-x">
+			<div class="small-12  cell  text-center  product-option__heading">
+				<span class="product-option__title">{% if option.name == 'Prescripción' %}{{ option.name }} Médica{%
+					elsif option.name == 'Cristal' %}Escoger mis cristales{% else %}Escoge el {{ option.name }}{% endif
+					%}</span>
+				{% unless forloop.first %}
+				<span class="product-option__arrow"><i class="far fa-angle-left"></i></span>
+				{% endunless %}
+				{% if option.name == 'Cristal' %}
+				<a role=button class="product-option__modal-trigger" data-open="crystals-modal"
+					data-modal="{{ modal_content_id }}">¿No sabes que cristal escoger? Aquí
+					te ayudamos <i class="far fa-question-circle fa-fw"></i></a>
+				{% endif %}
+			</div>
+
+			<!-- end .product-option__heading -->
+
+			{% for value in option.values %}
+			{% if option.name == 'Color' %}
+			{% include 'product_options_colors' %}
+			{% elsif option.name == 'Prescripción' %}
+			{% include 'product_options_prescription' %}
+			{% elsif option.name == 'Cristal' %}
+			{% include 'product_options_crystals' %}
+			{% endif %}
+			{% endfor %}
+
+			{% if option.name == 'Color' %}
+			<div class="small-12  cell  text-center  product-option__actions">
+				<button style="width:100%" type="button"
+					class="button  button--blue  product-option__button  product-option__button--next">Escoger mis
+					Cristales <i class="far fa-angle-right fa-fw"></i></button>
+				<br>
+				<div id="containerPruebaVirtual">
+					{% if product.field["Prueba Virtual"] and product.field["Prueba Virtual"].value != blank %}
+					<a id="btnPruebaVirtual" style="position: relative;width: 100%;left: 0;top: 0.5em;"
+						href="{{ product.field['Prueba Virtual'].value }}"
+						class="button  button--green  button--radius  product-heading__virtual"
+						title="Ver Prueba Virtual" target="_blank"><img src="{{ 'mood-icon_glass.svg' | asset }}"
+							alt="Icono Prueba Virtual {{ store.name }}">Prueba Virtual </a>
+					<br>
+					{% endif %}
+				</div>
+				<button style="width:100%" type="button"
+					class="button  button--black  product-option__button  product-option__button--last">Comprar sólo
+					Marco</button>
+			</div>
+
+			{% include 'product_status' %}
+			{% endif %}
+		</div>
+	</div>
+	<!-- end .product-option -->
+	{% endfor %}
